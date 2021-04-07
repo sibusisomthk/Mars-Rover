@@ -39,7 +39,7 @@ public class Helper{
 			Direction dir = getValueOfDirection(parts[2].charAt(0));
 			
 			position = new Position(x,y,dir);
-			if(!IsPositionAvailable(world,position))throw new Exception(); //check if position is empty(no rover on the same position)
+			if(!IsPositionAvailable(world,position,null))throw new Exception(); //check if position is empty(no rover on the same position)
 			
 			return position;
 		}catch(Exception e) {
@@ -65,7 +65,7 @@ public class Helper{
 			
 		}
 	}
-	public static Boolean IsPositionAvailable(World world,Position newPosition){
+	public static Boolean IsPositionAvailable(World world,Position newPosition,Rover currentRover){
 		for(int i = 0;i<world.GetRoversCount();i++) {
 			Position tempPosition ;
 			Rover rover = world.GetRover(i);
@@ -75,7 +75,10 @@ public class Helper{
 			}else {
 				tempPosition = rover.getEndPosition();
 			}
-			if((newPosition.getX() ==  tempPosition.getX() && newPosition.getY() == tempPosition.getY()) || PositionOutOfBounds(world,newPosition)) {
+			if(rover != currentRover && (newPosition.getX() ==  tempPosition.getX() && newPosition.getY() == tempPosition.getY())) {
+				return false;
+			}
+			if(PositionOutOfBounds(world,newPosition)) {
 				return false;
 			}
 		}

@@ -63,7 +63,7 @@ public class Solution {
 					if(position == null) {
 						System.out.print(UserInterface.INVALID_INPUT_MESSAGE);
 					}else {
-						if(!Helper.IsPositionAvailable(plateau, position)) {
+						if(!Helper.IsPositionAvailable(plateau, position,null)) {
 							System.out.print(UserInterface.POSITION_NOT_AVAILABLE);
 						}else {
 							step ++;

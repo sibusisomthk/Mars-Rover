@@ -86,7 +86,8 @@ public class World {
 		}
     	return strBuilder.toString();
     }
-    public Position ExecuteInstruction(Position position,char c) {
+    
+    public Position ExecuteInstruction(Position position,char c,Rover currentRover) {
     	if(c =='R' || c == 'r') {//Rotate rover
     		switch(position.getDirection()) {
     		case NORTH:
@@ -132,7 +133,7 @@ public class World {
     			position.setX(position.getX()-1);
     			break;
     		}
-    		if(!Helper.IsPositionAvailable(this, position)) position = null;//this will trigger end of rover movement.
+    		if(!Helper.IsPositionAvailable(this, position,currentRover)) position = null;//this will trigger end of rover movement.
     	}
     	return position;
     }
@@ -145,7 +146,7 @@ public class World {
     	   
     	   char[] instructions= tempRover.instructions.toCharArray();
     	   for(int s = 0;s<instructions.length;s++) {
-    		  Position newPosition = ExecuteInstruction(new Position(tempRover.endPosition.getX(),tempRover.endPosition.getY(),tempRover.endPosition.getDirection()),instructions[s]);
+    		  Position newPosition = ExecuteInstruction(new Position(tempRover.endPosition.getX(),tempRover.endPosition.getY(),tempRover.endPosition.getDirection()),instructions[s],tempRover);
     		  if(newPosition == null) {//obsticle ahead, rover can noloner move.
     			  break;
     		  }
